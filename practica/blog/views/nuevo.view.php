@@ -9,6 +9,7 @@
                 <input type="text" name="titulo" placeholder="Título del artículo">
                 <input type="text" name="extracto" placeholder="Extracto del artículo">
                 <textarea name="texto" placeholder="Texto del artículo"></textarea>
+                <input type="file" name="thumb">
 
                 <input type="submit" value="Crear artículo">
 

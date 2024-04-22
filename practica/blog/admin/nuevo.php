@@ -23,7 +23,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     move_uploaded_file($thumb, $archivo_subido);
 
     $statement = $conexion->prepare('INSERT INTO articulos (id, titulo, extracto, texto, thumb) VALUES (null, :titulo, :extracto, :texto, :thumb)');
-    $statement->execute(array(':titulo' => $titulo, ':titulo' => $titulo, ':titulo' => $titulo, ':titulo' => $titulo));
+    $statement->execute(array(':titulo' => $titulo, ':extracto' => $extracto, ':texto' => $texto, ':thumb' => $_FILES['thumb']['name']));
+
+    header('Location: ' . RUTA . '/admin');
 }
 
 require '../views/nuevo.view.php';
