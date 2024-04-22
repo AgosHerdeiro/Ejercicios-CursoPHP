@@ -3,7 +3,8 @@ var loader = document.getElementById('loader');
 
 btn.addEventListener('click', function () {
     var peticion = new XMLHttpRequest();
-    peticion.open('GET', 'https://api.npoint.io/cd5ddc4d5b6f2dbeea7d');
+    // peticion.open('GET', 'https://api.npoint.io/cd5ddc4d5b6f2dbeea7d');
+    peticion.open('GET', 'php/usuarios.php');
 
     loader.classList.add('active');
 
