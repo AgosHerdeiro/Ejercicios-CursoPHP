@@ -9,7 +9,7 @@
                 <input type="hidden" value="<?php echo $post['id']; ?>" name="id">
                 <input type="text" name="titulo" value="<?php echo $post['titulo']; ?>">
                 <input type="text" name="extracto" value="<?php echo $post['extracto']; ?>">
-                <textarea name="texto" value="<?php echo $post['texto']; ?>"></textarea>
+                <textarea name="texto"><?php echo $post['texto']; ?></textarea>
                 <input type="file" name="thumb">
                 <input type="hidden" name="thumb-guardada" value="<?php echo $post['thumb']; ?>">
 
