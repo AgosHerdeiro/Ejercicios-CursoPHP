@@ -1,11 +1,21 @@
 <?php
 
-class admin extends CI_Controller{
-	public function __construct(){
-		parent::__construct();
-	}
+class Admin extends CI_Controller
+{
+    public function __construct()
+    {
+        parent::__construct();
 
-	public function index(){
-		$this->load->view('admin/test');
-	}
+        $this->load->helper('url');
+    }
+
+    public function index()
+    {
+        $this->load->view('admin/test');
+    }
+
+    public function post_list()
+    {
+        $this->load->view('admin/post_list');
+    }
 }
