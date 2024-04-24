@@ -16,6 +16,7 @@ class Admin extends CI_Controller
 
     public function post_list()
     {
-        $this->load->view('admin/post_list');
+//        $this->load->view('admin/post_list');
+		$this->load->view('admin/post/list');
     }
 }
