@@ -51,9 +51,8 @@ class Admin extends CI_Controller
 
 				$post_id = $this->Post->insert($save);
 			} else {
-				echo validation_errors();
+//				echo validation_errors();
 			}
-
 
 		}
 

@@ -1,9 +1,7 @@
 <?php echo form_open('', 'class="my_form" enctype="multipart/form-data"'); ?>
 
 <div class="form-group">
-	<?php
-	echo form_label('Título', 'title');
-	?>
+	<?php echo form_label('Título', 'title'); ?>
 	<?php
 	$text_input = array(
 		'name' => 'title',
@@ -13,12 +11,11 @@
 	);
 	echo form_input($text_input);
 	?>
+	<?php echo form_error('title', '<div class="text-error">', '</div>'); ?>
 </div>
 
 <div class="form-group">
-	<?php
-	echo form_label('Url limpia', 'url_clean');
-	?>
+	<?php echo form_label('Url limpia', 'url_clean'); ?>
 	<?php
 	$text_input = array(
 		'name' => 'url_clean',
@@ -28,12 +25,11 @@
 	);
 	echo form_input($text_input);
 	?>
+	<?php echo form_error('url_clean', '<div class="text-error">', '</div>'); ?>
 </div>
 
 <div class="form-group">
-	<?php
-	echo form_label('Contenido', 'content');
-	?>
+	<?php echo form_label('Contenido', 'content'); ?>
 	<?php
 	$text_area = array(
 		'name' => 'content',
@@ -43,12 +39,11 @@
 	);
 	echo form_textarea($text_area);
 	?>
+	<?php echo form_error('content', '<div class="text-error">', '</div>'); ?>
 </div>
 
 <div class="form-group">
-	<?php
-	echo form_label('Descipción', 'description');
-	?>
+	<?php echo form_label('Descipción', 'description'); ?>
 	<?php
 	$text_area = array(
 		'name' => 'description',
@@ -58,12 +53,11 @@
 	);
 	echo form_textarea($text_area);
 	?>
+	<?php echo form_error('description', '<div class="text-error">', '</div>'); ?>
 </div>
 
 <div class="form-group">
-	<?php
-	echo form_label('Imagen', 'image');
-	?>
+	<?php echo form_label('Imagen', 'image'); ?>
 	<?php
 	$text_input = array(
 		'name' => 'image',
