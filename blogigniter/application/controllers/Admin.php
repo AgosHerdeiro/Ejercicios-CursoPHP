@@ -50,6 +50,8 @@ class Admin extends CI_Controller
 				);
 
 				$post_id = $this->Post->insert($save);
+
+				$this->upload($post_id, $this->input->post('title'));
 			} else {
 //				echo validation_errors();
 			}
@@ -61,5 +63,50 @@ class Admin extends CI_Controller
 		$view["title"] = "Crear Post";
 
 		$this->parser->parse('admin/template/body', $view);
+	}
+
+	private function upload($post_id, $title)
+	{
+		$image = "image";
+
+		$title = clean_name($title);
+
+//		Configuraciones de carga
+		$config['upload_path'] = 'uploads/post';
+		$config['file_name'] = $title;
+		$config['allowed_types'] = 'gif|jpg|png';
+		$config['max_size'] = 5000; // 40mb
+		$config['overwrite'] = TRUE;
+
+//		Cargamos la librería
+		$this->load->library('upload', $config);
+
+		if ($this->upload->do_upload($image)) {
+
+//			Datos del upload
+			$data = $this->upload->data();
+
+			$save = array(
+				'image' => $title . $data["file_ext"]
+			);
+
+			$this->Post->update($post_id, $save);
+			$this->resize_image($data['full_path']);
+		}
+	}
+
+	function resize_image($path_image)
+	{
+		$config['image_library'] = 'gd2';
+		$config['source_image'] = $path_image;
+//		$config['create_thumb'] = TRUE;
+		$config['maintain_ratio'] = TRUE;
+		$config['width'] = 500;
+		$config['height'] = 500;
+
+		$this->load->library('image_lib', $config);
+
+		$this->image_lib->resize();
+
 	}
 }
