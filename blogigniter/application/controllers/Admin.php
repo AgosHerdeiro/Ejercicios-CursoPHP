@@ -69,6 +69,16 @@ class Admin extends CI_Controller
 		$this->parser->parse('admin/template/body', $view);
 	}
 
+	public function post_delete($post_id = null) // Si no se le pasa un parámetro, lo setea como null
+	{
+		if ($post_id == null) {
+			echo 0;
+		} else {
+			$this->Post->delete($post_id);
+			echo 1;
+		}
+	}
+
 	private function upload($post_id, $title)
 	{
 		$image = "image";
