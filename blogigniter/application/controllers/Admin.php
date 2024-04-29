@@ -40,7 +40,7 @@ class Admin extends CI_Controller
 	{
 		if ($post_id == null) {
 //			Estamos creando un post
-			$data['title'] = $data['content'] = $data['description'] = $data['posted'] = $data['url_clean'] = "";
+			$data['title'] = $data['content'] = $data['description'] = $data['posted'] = $data['url_clean'] = $data['image'] = "";
 
 			$view["title"] = "Crear Post";
 		} else {
@@ -51,6 +51,7 @@ class Admin extends CI_Controller
 			$data['description'] = $post->description;
 			$data['posted'] = $post->posted;
 			$data['url_clean'] = $post->url_clean;
+			$data['image'] = $post->image;
 
 			$view["title"] = "Actualizar Post";
 		}
@@ -113,15 +114,23 @@ class Admin extends CI_Controller
 		}
 	}
 
-	private function upload($post_id, $title)
+	function images_server()
 	{
-		$image = "image";
+		$data["images"] = all_images();
+		$this->load->view('admin/post/image', $data);
+	}
 
-		$title = clean_name($title);
+	public function upload($post_id = null, $title = null)
+	{
+		$image = "upload";
+
+		if ($title != null)
+			$title = clean_name($title);
 
 //		Configuraciones de carga
 		$config['upload_path'] = 'uploads/post';
-		$config['file_name'] = $title;
+		if ($title != null)
+			$config['file_name'] = $title;
 		$config['allowed_types'] = 'gif|jpg|png';
 		$config['max_size'] = 5000; // 40mb
 		$config['overwrite'] = TRUE;
@@ -134,11 +143,17 @@ class Admin extends CI_Controller
 //			Datos del upload
 			$data = $this->upload->data();
 
-			$save = array(
-				'image' => $title . $data["file_ext"]
-			);
+			if ($title != null && $post_id != null) {
+				$save = array(
+					'image' => $title . $data["file_ext"]
+				);
 
-			$this->Post->update($post_id, $save);
+				$this->Post->update($post_id, $save);
+			} else {
+				$title = $data["file_name"];
+				echo json_encode(array("fileName" => $title, "uploaded" => 1, "url" => "/" . PROJECT_FOLDER . "/uploads/post/" . $title));
+			}
+
 			$this->resize_image($data['full_path']);
 		}
 	}

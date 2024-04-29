@@ -60,14 +60,15 @@
 	<?php echo form_label('Imagen', 'image'); ?>
 	<?php
 	$text_input = array(
-		'name' => 'image',
-		'id' => 'image',
+		'name' => 'upload',
+		'id' => 'upload',
 		'value' => '',
 		'type' => 'file',
 		'class' => 'form-control input-lg'
 	);
 	echo form_input($text_input);
 	?>
+	<?php echo $image != "" ? '<img class="img_post img-thumbnail img-presentation-small" src="' . base_url() . 'uploads/post/' . $image . '">' : ""; ?>
 </div>
 
 <div class="form-group">
@@ -80,3 +81,13 @@
 <?php echo form_submit('mysubmit', 'Guardar', 'class="btn btn-primary"') ?>
 
 <?php echo form_close() ?>
+
+<script>
+	$(function () {
+		var editor = CKEDITOR.replace('content', {
+			height: 400,
+			filebrowserUploadUrl: "<?php echo base_url() ?>admin/upload",
+			filebrowserBrowseUrl: "<?php echo base_url() ?>admin/images_server"
+		});
+	});
+</script>

@@ -38,7 +38,7 @@
 
 define('APP_VERSION', "1");
 define('APP_NAME', "BlogIgniter");
-define('PROJECT_FOLDER', "curso01");
+define('PROJECT_FOLDER', "blogigniter");
 define('APP_DESCRIPTION', "Blog sobre temas de la vida...");
 
 /*
