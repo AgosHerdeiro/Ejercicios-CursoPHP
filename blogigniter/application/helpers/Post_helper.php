@@ -5,6 +5,17 @@ function posted()
 	return array("si" => "Si", "no" => "No");
 }
 
+function categories_to_form($categories)
+{
+	$aCategories = array();
+
+	foreach ($categories as $key => $c) {
+		$aCategories[$c->category_id] = $c->name;
+	}
+
+	return $aCategories;
+}
+
 function clean_name($name)
 {
 	return url_title($name, '-', TRUE);
