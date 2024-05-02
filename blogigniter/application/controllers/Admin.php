@@ -30,9 +30,26 @@ class Admin extends CI_Controller
 
 	public function post_list()
 	{
-		$data["posts"] = $this->Post->findAll();
+//		$data["posts"] = $this->Post->findAll();
 //        $this->load->view('admin/post_list');
-		$view["body"] = $this->load->view('admin/post/list', $data, TRUE);
+//		$view["body"] = $this->load->view('admin/post/list', $data, TRUE);
+
+		$crud = new grocery_CRUD();
+
+		$crud->set_theme('datatables');
+		$crud->set_table('posts');
+		$crud->set_subject('Post');
+		$crud->columns('title', 'description', 'created_at', 'image', 'posted');
+
+		$crud->unset_jquery();
+		$crud->unset_read();
+		$crud->unset_clone();
+		$crud->unset_add();
+		$crud->unset_edit();
+
+		$output = $crud->render();
+		$view["grocery_crud"] = json_encode($output);
+
 		$view["title"] = "Posts";
 
 		$this->parser->parse('admin/template/body', $view);
