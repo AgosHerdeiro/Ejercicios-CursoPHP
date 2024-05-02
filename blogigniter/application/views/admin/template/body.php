@@ -21,6 +21,9 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 	<script src="<?php echo base_url() ?>assets/js/jquery-3.3.1.min.js"></script>
+
+	<?php (isset($grocery_crud)) ? $this->load->view("admin/template/grocery_crud_header", ["grocery_crud" => $grocery_crud]) : '' ?>
+
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -56,7 +59,10 @@
 						</div>
 						<!-- /.box-header -->
 						<div class="box-body">
-							{body}
+							<?php if (isset($body)) : ?>
+								{body}
+							<?php endif; ?>
+							<?php (isset($grocery_crud)) ? $this->load->view("admin/template/grocery_crud", ["grocery_crud" => $grocery_crud]) : '' ?>
 						</div>
 						<!-- /.box-body -->
 					</div>

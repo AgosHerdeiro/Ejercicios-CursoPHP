@@ -18,7 +18,7 @@ function categories_to_form($categories)
 
 function clean_name($name)
 {
-	return url_title($name, '-', TRUE);
+	return convert_accented_characters(url_title($name, '-', TRUE));
 }
 
 function all_images()

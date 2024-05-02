@@ -10,6 +10,7 @@ class Admin extends CI_Controller
 
 		$this->load->library('parser');
 		$this->load->library('form_validation');
+		$this->load->library('grocery_CRUD');
 
 		$this->load->helper('url');
 		$this->load->helper('form');
@@ -121,8 +122,29 @@ class Admin extends CI_Controller
 
 	public function category_list()
 	{
-		$data["categories"] = $this->Category->findAll();
-		$view["body"] = $this->load->view('admin/category/list', $data, TRUE);
+//		$data["categories"] = $this->Category->findAll();
+//		$view["body"] = $this->load->view('admin/category/list', $data, TRUE);
+
+		$crud = new grocery_CRUD();
+
+		$crud->set_theme('datatables');
+		$crud->set_table('categories');
+		$crud->set_subject('Categoría');
+		$crud->columns('category_id', 'name');
+
+		$crud->callback_before_insert(array($this, 'category_iu_callback_before'));
+		$crud->callback_before_update(array($this, 'category_iu_callback_before'));
+
+		$crud->set_rules('name', 'Nombre', 'required|min_length[10]|max_length[100]');
+
+		$crud->unset_jquery();
+		$crud->unset_read();
+		$crud->unset_clone();
+
+		$output = $crud->render();
+		$view["grocery_crud"] = json_encode($output);
+//		$view["body"] = $output; Tira error porque solo puede recibir texto
+
 		$view["title"] = "Categories";
 
 		$this->parser->parse('admin/template/body', $view);
@@ -171,7 +193,8 @@ class Admin extends CI_Controller
 		$this->parser->parse('admin/template/body', $view);
 	}
 
-	public function category_delete($category_id = null) {
+	public function category_delete($category_id = null)
+	{
 		if ($category_id == null) {
 			echo 0;
 		} else {
@@ -236,5 +259,13 @@ class Admin extends CI_Controller
 		$this->load->library('image_lib', $config);
 
 		$this->image_lib->resize();
+	}
+
+	function category_iu_callback_before($post_array, $pk = null)
+	{
+		if ($post_array['url_clean'] == "") {
+			$post_array['url_clean'] = clean_name($post_array["name"]);
+		}
+		return $post_array;
 	}
 }
