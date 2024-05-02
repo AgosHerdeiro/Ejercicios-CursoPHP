@@ -36,6 +36,7 @@
  * @filesource
  */
 
+define('PAGE_SIZE', 2);
 define('APP_VERSION', "1");
 define('APP_NAME', "BlogIgniter");
 define('PROJECT_FOLDER', "blogigniter");

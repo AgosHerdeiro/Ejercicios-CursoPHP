@@ -31,3 +31,16 @@ function all_images()
 
 	return $files; // Arreglo de archivos
 }
+
+function image_post($post_id)
+{
+	$CI =& get_instance();
+	$post =	$CI->Post->find($post_id);
+
+	if (isset($post) && $post->image != "") {
+		return base_url() . "uploads/post/" . $post->image;
+	} else {
+		return base_url() . "assets/img/logo_black.png";
+	}
+
+}

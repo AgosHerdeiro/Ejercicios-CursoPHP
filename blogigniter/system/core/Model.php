@@ -110,4 +110,10 @@ class CI_Model {
 		$this->db->insert($this->table, $data);
 		return $this->db->insert_id();
 	}
+
+	function count()
+	{
+		$count = $this->db->query("SELECT $this->table_id FROM $this->table");
+		return $count->num_rows();
+	}
 }
