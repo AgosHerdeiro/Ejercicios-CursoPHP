@@ -17,4 +17,16 @@ class Post extends CI_Model
 
 		return $query->result();
 	}
+
+	function getByUrlClean($url_clean, $posted = 'Si')
+	{
+		$this->db->select('p.*, c.url_clean as c_url_clean');
+		$this->db->from("$this->table as p");
+		$this->db->join("categories as c", "c.category_id = p.category_id");
+		$this->db->where("posted", $posted);
+		$this->db->where("p.url_clean", $url_clean);
+		$query = $this->db->get();
+
+		return $query->row();
+	}
 }
