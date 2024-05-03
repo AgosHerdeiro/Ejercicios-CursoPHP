@@ -54,3 +54,5 @@ $route['blog/(:num)'] = 'blog/index/$1'; // El ruteo va a ser posible solo si el
 $route['blog/(:any)/(:any)'] = 'blog/post_view/$1/$2'; // Lo que venga después del Blog y tenga 2 parámetros, lo envia a post_view
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+$route['login'] = 'app/login';
+$route['register'] = 'app/register';

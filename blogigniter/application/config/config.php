@@ -530,3 +530,11 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+
+$config['user_table'] = 'users';
+
+$config['levels_and_roles'] = [
+	'1' => 'customer',
+	'6' => 'manager',
+	'9' => 'admin'
+];

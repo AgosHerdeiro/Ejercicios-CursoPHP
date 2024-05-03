@@ -33,7 +33,7 @@
 		<!-- /.social-auth-links -->
 
 		<a href="#">Olvidé contraseña</a><br>
-		<a href="register.html" class="text-center">Registrarse</a>
+		<a href="register" class="text-center">Registrarse</a>
 
 	</div>
 	<!-- /.login-box-body -->
