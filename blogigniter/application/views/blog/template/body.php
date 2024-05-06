@@ -12,6 +12,9 @@
 	<link rel="stylesheet" href="<?php echo base_url() ?>assets/fontawesome-free/css/fontawesome.min.css">
 	<!-- Theme style -->
 	<link rel="stylesheet" href="<?php echo base_url() ?>assets/css/blog/custom.css">
+	<link rel="stylesheet"
+		  href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
 <body class="hold-transition skin-blue sidebar-mini">

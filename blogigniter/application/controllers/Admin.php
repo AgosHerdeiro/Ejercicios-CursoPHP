@@ -19,9 +19,12 @@ class Admin extends CI_Controller
 
 		$this->load->helper('Post_helper');
 		$this->load->helper('Date_helper');
+		$this->load->helper('User_helper');
 
 		$this->load->model('Post');
 		$this->load->model('Category');
+		$this->load->model('User');
+
 	}
 
 	public function index()

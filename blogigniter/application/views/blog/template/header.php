@@ -35,19 +35,19 @@
 		</form>
 		<ul class="nav navbar-nav navbar-right user-options">
 			<?php if ($this->session->userdata("id") != NULL): ?>
-				<li title="Login">
-					<a href="#">
-						<span class="fa fa-user fa-2x"></span>
+				<li title="Perfil">
+					<a href="<?php echo base_url() . 'app/profile' ?>">
+						<span class="fa fa-user"></span>
 					</a>
 				</li>
 				<li title="Favoritos">
 					<a href="#">
-						<span class="fa fa-heart fa-2x"></span>
+						<span class="fa fa-heart"></span>
 					</a>
 				</li>
 				<li title="Cerrar sesión">
 					<a href="<?php echo base_url() . 'app/logout' ?>">
-						<span class="fa fa-sign-out fa-2x"></span>
+						<span class="fa fa-sign-out"></span>
 					</a>
 				</li>
 			<?php else: ?>

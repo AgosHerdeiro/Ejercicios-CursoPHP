@@ -18,6 +18,7 @@ class App extends CI_Controller
 
 		$this->load->helper('Post_helper');
 		$this->load->helper('Date_helper');
+		$this->load->helper('User_helper');
 
 		$this->load->model('User');
 	}
@@ -53,7 +54,7 @@ class App extends CI_Controller
 			}
 
 		}
-		$view["body"] = $this->load->view('app/login', null, TRUE);
+		$view["body"] = $this->load->view('app/login', NULL, TRUE);
 		$this->parser->parse('admin/template/body_format_2', $view);
 	}
 
@@ -112,4 +113,101 @@ class App extends CI_Controller
 		$this->parser->parse('admin/template/body_format_2', $view);
 	}
 
+	public function profile()
+	{
+		if ($this->session->userdata("auth_level") != NULL) {
+			$data['user'] = $this->User->find($this->session->userdata('id'));
+
+			$this->form_validation->set_rules('old_pass', 'Contraseña actual', 'required|callback_validate_same_passwd', array(
+				'validate_same_passwd' => 'La contraseña actual no es correcta'));
+			$this->form_validation->set_rules('new_pass', 'Contraseña nueva', 'required|min_length[8]|max_length[72]');
+			$this->form_validation->set_rules('new_pass_veri', 'Repita la nueva contraseña', 'required|matches[new_pass]');
+
+			if ($this->input->server('REQUEST_METHOD') == 'POST') {
+				if ($this->form_validation->run()) {
+
+					$save = array(
+						'passwd' => password_hash($this->input->post("new_pass"), PASSWORD_DEFAULT),
+					);
+
+					$this->User->update($this->session->userdata('id'), $save);
+					$this->session->sess_destroy();
+					$this->session->set_flashdata('text', 'Contraseña actualizada');
+					$this->session->set_flashdata('type', 'danger');
+					redirect('/login');
+				}
+			}
+
+			$view["body"] = $this->load->view("app/profile", $data, TRUE);
+
+			if ($this->session->userdata("auth_level") == 9) {
+				$view["title"] = 'Perfil';
+				$this->parser->parse("admin/template/body", $view);
+			} else {
+				$this->parser->parse("blog/template/body", $view);
+			}
+		}
+	}
+
+	public function load_avatar()
+	{
+		$this->avatar_upload();
+		$this->session->set_flashdata('type', 'success');
+		$this->session->set_flashdata('text', 'Avatar cambiado con éxito.');
+		redirect('/app/profile');
+	}
+
+	private function avatar_upload()
+	{
+
+		$id = $this->session->userdata('id');
+
+		$image = 'image';
+		$config['upload_path'] = 'uploads/user/';
+		$config['file_name'] = 'imagen_' . $id;
+		$config['allowed_types'] = "jpg|jpeg|png";
+		$config['overwrite'] = TRUE;
+
+		$this->load->library('upload', $config);
+		if (!$this->upload->do_upload($image)) {
+			$this->session->set_flashdata('type', 'danger');
+			$this->session->set_flashdata('text', $this->upload->display_errors());
+			return;
+		}
+		$this->upload->do_upload($image);
+		$data = $this->upload->data();
+		$save = array('avatar' => 'imagen_' . $id . $data['file_ext']);
+
+		$this->User->update($id, $save);
+		$this->session->set_userdata('avatar', $save['avatar']);
+		$this->resize_avatar($data['full_path'], $save['avatar']);
+	}
+
+	private function resize_avatar($ruta, $nombre)
+	{
+		$config['image_library'] = 'gd2';
+		$config['source_image'] = $ruta;
+		$config['new_image'] = 'uploads/avatar/user/' . $nombre;
+		$config['maintain_ratio'] = TRUE;
+		$config['width'] = 300;
+		$config['height'] = 300;
+
+		$this->load->library('image_lib', $config);
+
+		if (!$this->image_lib->resize()) {
+			echo $this->image_lib->display_errors();
+		}
+	}
+
+	public function validate_same_passwd($passwd)
+	{
+		$user = $this->User->find($this->session->userdata('id'));
+
+		$password = $this->User->validatePassword($user->username);
+		if (password_verify($passwd, $password)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
