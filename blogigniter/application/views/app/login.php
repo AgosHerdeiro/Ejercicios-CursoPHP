@@ -6,13 +6,13 @@
 	<div class="login-box-body">
 		<p class="login-box-msg">Iniciar sesión</p>
 
-		<?php echo form_open('app/ajax_attempt_login', ['class' => 'std-form']); ?>
+		<?php echo form_open('login'/*, ['class' => 'std-form']*/); ?>
 		<div class="form-group has-feedback">
-			<input name="login_string" class="form-control" placeholder="Usuario o email" type="text">
+			<input name="username" class="form-control" placeholder="Usuario o email" type="text">
 			<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 		</div>
 		<div class="form-group has-feedback">
-			<input name="login_pass" class="form-control" placeholder="Password" type="password">
+			<input name="password" class="form-control" placeholder="Password" type="password">
 			<span class="glyphicon glyphicon-lock form-control-feedback"></span>
 		</div>
 		<div class="row">
@@ -38,35 +38,3 @@
 	</div>
 	<!-- /.login-box-body -->
 </div>
-
-<script>
-	$(document).ready(function () {
-		$(document).on('submit', 'form', function (e) {
-			$.ajax({
-				type: 'post',
-				cache: false,
-				url: '<?php echo base_url() ?>app/ajax_attempt_login',
-				data: {
-					'login_string': $('[name="login_string"]').val(),
-					'login_pass': $('[name="login_pass"]').val(),
-					'loginToken': $('[name="token"]').val()
-				},
-				dataType: 'json',
-				success: function (response) {
-					$('[name="loginToken"]').val(response.token);
-					console.log(response);
-					if (response.status == 1) {
-						window.location.href = '<?php echo base_url() ?>admin';
-					} else if (response.status == 0 && response.on_hold) {
-						$('form').hide();
-						$('#on-hold-message').show();
-						alert('Intentos de inicio de sesión excesivos.');
-					} else {
-						alert('Login fallido', 'Login fallido ' + response.count + ' de ' + $('#max_allowed_attempts').val(), 'error');
-					}
-				}
-			});
-			return false;
-		});
-	});
-</script>

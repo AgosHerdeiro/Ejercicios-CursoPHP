@@ -14,7 +14,6 @@ class Index extends CI_Controller
 	public function index()
 	{
 
-		echo var_dump($this->session->userdata('auth_level'));
 		if ($this->session->userdata("auth_level") == 9) {
 			redirect("/admin");
 		} else {

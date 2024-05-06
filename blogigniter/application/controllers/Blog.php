@@ -9,6 +9,7 @@ class Blog extends CI_Controller
 		$this->load->database();
 
 		$this->load->library('parser');
+		$this->load->library('session');
 
 		$this->load->helper('url');
 		$this->load->helper('text');

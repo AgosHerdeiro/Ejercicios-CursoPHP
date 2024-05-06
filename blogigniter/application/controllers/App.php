@@ -27,9 +27,41 @@ class App extends CI_Controller
 		if ($this->uri->uri_string() == 'app/login') {
 			show_404();
 		}
-		
+
+		if ($this->input->server('REQUEST_METHOD') == 'POST') {
+			$username = $this->input->post('username');
+			$password_user = $this->input->post('password');
+			$password = $this->User->validatePassword($username);
+
+			if (password_verify($password_user, $password)) {
+				$user = $this->User->findUser($username, $password);
+
+				$this->session->set_userdata('id', $user->user_id);
+				$this->session->set_userdata('username', $user->username);
+				$this->session->set_userdata('auth_level', $user->auth_level);
+				$this->session->set_userdata('email', $user->email);
+
+				if ($user) {
+					$auth_level = $this->User->getAuthLevel($username);
+					if ($auth_level == 9) {
+						redirect("/admin");
+					} else {
+						redirect("/blog");
+
+					}
+				}
+			}
+
+		}
 		$view["body"] = $this->load->view('app/login', null, TRUE);
 		$this->parser->parse('admin/template/body_format_2', $view);
+	}
+
+	public function logout()
+	{
+		$this->session->sess_destroy();
+
+		redirect("/login");
 	}
 
 	public function register()
@@ -59,7 +91,7 @@ class App extends CI_Controller
 					'surname' => $data['surname'],
 					'username' => $data['username'],
 					'email' => $data['email'],
-					'passwd' => $this->hash_passwd($this->input->post("passwd")),
+					'passwd' => password_hash($this->input->post("passwd"), PASSWORD_DEFAULT),
 					'user_id' => $this->User->get_unused_id(),
 					'created_at' => date('Y-m-d H:i:s'),
 					'auth_level' => 1
@@ -67,16 +99,12 @@ class App extends CI_Controller
 
 				$this->User->insert($save);
 
-				echo 'B';
-
 				$this->session->set_flashdata('text', "Registro exitoso");
 				$this->session->set_flashdata('type', 'success');
 				redirect('login');
 			} else {
 				echo form_error('username');
 				echo form_error('email');
-
-				echo 'M';
 			}
 		}
 
@@ -84,18 +112,4 @@ class App extends CI_Controller
 		$this->parser->parse('admin/template/body_format_2', $view);
 	}
 
-	public function hash_passwd($password, $random_salt = '')
-	{
-		// If no salt provided for older PHP versions, make one
-		if (!is_php('5.5') && empty($random_salt))
-			$random_salt = $this->random_salt();
-
-		// PHP 5.5+ uses new password hashing function
-		if (is_php('5.5')) {
-			return password_hash($password, PASSWORD_BCRYPT, ['cost' => 11]);
-		} // PHP < 5.5 uses crypt
-		else {
-			return crypt($password, '$2y$10$' . $random_salt);
-		}
-	}
 }

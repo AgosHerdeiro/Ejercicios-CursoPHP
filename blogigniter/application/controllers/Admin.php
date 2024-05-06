@@ -11,6 +11,7 @@ class Admin extends CI_Controller
 		$this->load->library('parser');
 		$this->load->library('form_validation');
 		$this->load->library('grocery_CRUD');
+		$this->load->library('session');
 
 		$this->load->helper('url');
 		$this->load->helper('form');

@@ -532,9 +532,3 @@ $config['rewrite_short_tags'] = FALSE;
 $config['proxy_ips'] = '';
 
 $config['user_table'] = 'users';
-
-$config['levels_and_roles'] = [
-	'1' => 'customer',
-	'6' => 'manager',
-	'9' => 'admin'
-];
