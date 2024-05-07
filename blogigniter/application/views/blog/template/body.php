@@ -26,5 +26,15 @@
 
 <script src="<?php echo base_url() ?>assets/js/jquery-3.3.1.min.js"></script>
 <script src="<?php echo base_url() ?>assets/js/bootstrap.min.js"></script>
+<script src="<?php echo base_url() ?>assets/js/jquery.toaster.js"></script>
+
+<?php if ($this->session->flashdata("text") != null): ?>
+	<script>
+		$.toaster({
+		priority :'<?php echo $this->session->flashdata("type")?>',
+		title :'<?php echo $this->session->flashdata("text")?>',
+		message :''});
+	</script>
+<?php endif; ?>
 </body>
 </html>

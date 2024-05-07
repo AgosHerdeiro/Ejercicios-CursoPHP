@@ -37,17 +37,17 @@
 			<?php if ($this->session->userdata("id") != NULL): ?>
 				<li title="Perfil">
 					<a href="<?php echo base_url() . 'app/profile' ?>">
-						<span class="fa fa-user"></span>
+						<span class="fa fa-user fa-2x"></span>
 					</a>
 				</li>
 				<li title="Favoritos">
 					<a href="#">
-						<span class="fa fa-heart"></span>
+						<span class="fa fa-heart fa-2x"></span>
 					</a>
 				</li>
 				<li title="Cerrar sesión">
 					<a href="<?php echo base_url() . 'app/logout' ?>">
-						<span class="fa fa-sign-out"></span>
+						<span class="fa fa-sign-out fa-2x"></span>
 					</a>
 				</li>
 			<?php else: ?>

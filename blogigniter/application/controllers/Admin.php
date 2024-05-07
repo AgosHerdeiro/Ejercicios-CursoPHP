@@ -265,6 +265,9 @@ class Admin extends CI_Controller
 			}
 
 			$this->resize_image($data['full_path']);
+		} else {
+			$this->session->set_flashdata('text', $this->upload->display_errors());
+			$this->session->set_flashdata('type', 'danger');
 		}
 	}
 

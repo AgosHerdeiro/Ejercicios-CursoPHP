@@ -51,9 +51,13 @@ class App extends CI_Controller
 
 					}
 				}
+			} else {
+				$this->session->set_flashdata('text', 'Credenciales incorrectas');
+				$this->session->set_flashdata('type', 'warning');
 			}
 
 		}
+
 		$view["body"] = $this->load->view('app/login', NULL, TRUE);
 		$this->parser->parse('admin/template/body_format_2', $view);
 	}

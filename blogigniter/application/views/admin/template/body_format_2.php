@@ -9,7 +9,7 @@
 	<!-- Bootstrap 3.3.7 -->
 	<link rel="stylesheet" href="<?php echo base_url() ?>assets/css/bootstrap.min.css">
 	<!-- Font Awesome -->
-	<link rel="stylesheet" href="<?php echo base_url() ?>assets/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="<?php echo base_url() ?>assets/fontawesome-free/css/fontawesome.min.css">
 	<!-- Theme style -->
 	<link rel="stylesheet" href="<?php echo base_url() ?>assets/css/admin/AdminLTE.min.css">
 	<link rel="stylesheet" href="<?php echo base_url() ?>assets/css/admin/custom.css">
@@ -24,5 +24,15 @@
 <body class="hold-transition login-page">
 {body}
 <script src="<?php echo base_url() ?>assets/js/bootstrap.min.js"></script>
+<script src="<?php echo base_url() ?>assets/js/jquery.toaster.js"></script>
+
+<?php if ($this->session->flashdata("text") != null): ?>
+	<script>
+		$.toaster({
+			priority :'<?php echo $this->session->flashdata("type")?>',
+			title :'<?php echo $this->session->flashdata("text")?>',
+			message :''});
+	</script>
+<?php endif; ?>
 </body>
 </html>
