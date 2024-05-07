@@ -36,9 +36,40 @@ class Blog extends CI_Controller
 
 		$data['last_page'] = $last_page;
 		$data['current_page'] = $num_page;
+		$data['token_url'] = 'blog/';
 		$data['posts'] = $this->Post->get_pagination($offset);
+		$data['pagination'] = true;
 
-		$view['body'] = $this->load->view("blog/index", $data, TRUE);
+		$view['body'] = $this->load->view("blog/utils/post_list", $data, TRUE);
+
+		$this->parser->parse('blog/template/body', $view);
+	}
+
+	public function category($c_clean_url, $num_page = 1)
+	{
+		$category = $this->Category->GetByUrlClean($c_clean_url);
+
+		if (!isset($category)) {
+			show_404();
+		}
+
+		$num_page--;
+		$num_post = $this->Post->countByUrlClean($c_clean_url);
+		$last_page = ceil($num_post / PAGE_SIZE);
+
+		if ($num_page < 0 || $num_page > $last_page) {
+			redirect('/blog/category' . $c_clean_url);
+		}
+
+		$offset = $num_page * PAGE_SIZE;
+
+		$data['last_page'] = $last_page;
+		$data['current_page'] = $num_page;
+		$data['token_url'] = 'blog/category/' . $c_clean_url . '/';
+		$data['posts'] = $this->Post->get_pagination($offset, 'si', 'desc', $c_clean_url);
+		$data['pagination'] = true;
+
+		$view['body'] = $this->load->view("blog/utils/post_list", $data, TRUE);
 
 		$this->parser->parse('blog/template/body', $view);
 	}
@@ -50,7 +81,7 @@ class Blog extends CI_Controller
 		}
 
 		if (!isset($clean_url)) {
-			show_404(); // Evita que el resto del cuerpo se ejeute
+			show_404(); // Evita que el resto del cuerpo se ejecute
 		}
 
 		$post = $this->Post->GetByUrlClean($clean_url);

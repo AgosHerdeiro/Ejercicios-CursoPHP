@@ -50,6 +50,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 $route['default_controller'] = 'index';
+$route['blog/category/(:any)'] = 'blog/category/$1';
 $route['blog/(:num)'] = 'blog/index/$1'; // El ruteo va a ser posible solo si el parámetro es un número
 $route['blog/(:any)/(:any)'] = 'blog/post_view/$1/$2'; // Lo que venga después del Blog y tenga 2 parámetros, lo envia a post_view
 $route['404_override'] = '';

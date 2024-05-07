@@ -1,6 +1,6 @@
 <?php foreach ($posts as $key => $p): ?>
 	<div class="card post">
-		<a href="<?php echo base_url() . 'blog/' . $p->c_url_clean . '/' . $p->url_clean?>">
+		<a href="<?php echo base_url() . 'blog/' . $p->c_url_clean . '/' . $p->url_clean ?>">
 			<div class="card-header bg-danger"></div>
 			<div class="card-body">
 				<img src="<?php echo image_post($p->post_id) ?>" alt="">
@@ -13,24 +13,30 @@
 <?php endforeach; ?>
 
 <?php
-$prev = $current_page - 1;
-$next = $current_page + 1;
+if ($pagination):
 
-if ($next < 1)
-	$prev = 1;
+	$prev = $current_page - 1;
+	$next = $current_page + 1;
+	$next_b = $current_page + 1;
 
-if ($next > $last_page)
-	$next = $last_page;
-?>
+	if ($prev < 1)
+		$prev = 1;
 
-<ul class="pagination">
-	<li class="page-item"><a href="<?php echo base_url() . 'blog/' . $prev ?>" class="page-link">Prev</a></li>
+	if ($next > $last_page)
+		$next = $last_page;
+	echo $next_b;
+	?>
 
-	<?php for ($i = 1; $i <= $last_page; $i++) { ?>
-		<li class="page-link"><a href="<?php echo base_url() . 'blog/' . $i; ?>"> <?php echo $i; ?></a></li>
-	<?php } ?>
+	<ul class="pagination">
+		<li class="page-item"><a class="page-link" href="<?php echo base_url() . $token_url . $prev ?>">Prev</a></li>
 
-	<?php if ($current_page != $next) { ?>
-		<li class="page-link"><a href="<?php echo base_url() . 'blog/' . $next; ?>" class="next-link">Sig</a></li>
-	<?php } ?>
-</ul>
+		<?php for ($i = 1; $i <= $last_page; $i++) { ?>
+			<li class="page-item"><a class="page-link" href="<?php echo base_url() . $token_url . $i; ?>"> <?php echo $i; ?></a></li>
+		<?php } ?>
+
+		<?php if ($current_page != $next) { ?>
+			<li class="page-item"><a class="page-link" href="<?php echo base_url() . $token_url . $next; ?>">Sig</a>
+			</li>
+		<?php } ?>
+	</ul>
+<?php endif; ?>
